@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.12.1",
+    "discord-api-types": "^0.37.98",
     "discord-interactions": "^4.0.0",
     "hono": "^4.5.8"
   }

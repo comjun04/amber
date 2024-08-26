@@ -11,6 +11,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.12.1
         version: 1.12.1
+      discord-api-types:
+        specifier: ^0.37.98
+        version: 0.37.98
       discord-interactions:
         specifier: ^4.0.0
         version: 4.0.0
@@ -187,6 +190,9 @@ packages:
   '@types/node@22.5.0':
     resolution: {integrity: sha512-DkFrJOe+rfdHTqqMg0bSNlGlQ85hSoh2TPzZyhHsXnMtligRWpxUySiyw8FY14ITt24HVCiQPWxS3KO/QlGmWg==}
 
+  discord-api-types@0.37.98:
+    resolution: {integrity: sha512-xsH4UwmnCQl4KjAf01/p9ck9s+/vDqzHbUxPOBzo8fcVUa/hQG6qInD7Cr44KAuCM+xCxGJFSAUx450pBrX0+g==}
+
   discord-interactions@4.0.0:
     resolution: {integrity: sha512-27HSJ379W9E4T6Or+efQRGnekJ6g8kYokSFtK5HKc/3ObC+83O+vxdg2trStD/2XPIHVPMNVIoZAeK9s/EL8Yg==}
     engines: {node: '>=18.4.0'}
@@ -312,6 +318,8 @@ snapshots:
   '@types/node@22.5.0':
     dependencies:
       undici-types: 6.19.8
+
+  discord-api-types@0.37.98: {}
 
   discord-interactions@4.0.0: {}
 
