@@ -23,6 +23,13 @@ const commands: RESTPutAPIApplicationCommandsJSONBody = [
         type: ApplicationCommandOptionType.User,
         required: false,
       },
+      {
+        name: 'ephemeral',
+        description:
+          '메세지를 나만 볼 수 있게 출력할지 여부. 기본값은 true입니다.',
+        type: ApplicationCommandOptionType.Boolean,
+        required: false,
+      },
     ],
   },
 ]

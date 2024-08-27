@@ -55,7 +55,9 @@ app.post('/interactions', async (c) => {
 
     if (name === 'avatar') {
       const commandData = data as APIChatInputApplicationCommandInteractionData
-      const targetUserOption = commandData.options?.[0]
+      const targetUserOption = commandData.options?.find(
+        (o) => o.name === 'user',
+      )
       const targetUserId =
         targetUserOption?.type === ApplicationCommandOptionType.User
           ? targetUserOption.value
@@ -93,6 +95,14 @@ app.post('/interactions', async (c) => {
           ? `https://cdn.discordapp.com/avatars/${targetUserId}/${targetUser.avatar}.${isAvatarGif ? 'gif' : 'png'}?size=1024`
           : `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`
 
+      const ephemeralOption = commandData.options?.find(
+        (o) => o.name === 'ephemeral',
+      )
+      const shouldRespondEphemeral =
+        ephemeralOption?.type === ApplicationCommandOptionType.Boolean
+          ? ephemeralOption.value
+          : true // 옵션이 지정되지 않았을 경우 기본값 true
+
       const payload: APIInteractionResponseCallbackData = {
         embeds: [
           {
@@ -103,7 +113,7 @@ app.post('/interactions', async (c) => {
             },
           },
         ],
-        flags: MessageFlags.Ephemeral,
+        flags: shouldRespondEphemeral ? MessageFlags.Ephemeral : undefined,
       }
 
       return c.json<APIInteractionResponseChannelMessageWithSource>({
