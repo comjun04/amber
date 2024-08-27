@@ -21,7 +21,7 @@ app.use(async (c, next) => {
   const timestamp = c.req.header('X-Signature-Timestamp') ?? ''
 
   const isValidRequest = await verifyKey(
-    await c.req.arrayBuffer(),
+    await c.req.text(),
     signature,
     timestamp,
     clientPublicKey,
@@ -34,7 +34,7 @@ app.use(async (c, next) => {
   return await next()
 })
 
-app.get('/interactions', async (c) => {
+app.post('/interactions', async (c) => {
   const body = await c.req.json<APIInteraction>()
   const { type, data } = body
 
