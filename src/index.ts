@@ -9,7 +9,7 @@ import {
   InteractionType,
 } from 'discord-api-types/v10'
 
-const clientPublicKey = process.env.CLIENT_PUBLIC_KEY ?? ''
+const clientPublicKey = process.env.APP_PUBLIC_KEY ?? ''
 
 const app = new Hono()
 
