@@ -54,6 +54,20 @@ const commands: RESTPutAPIApplicationCommandsJSONBody = [
       },
     ],
   },
+  {
+    name: 'say',
+    description: '입력한 내용을 말합니다.',
+    type: ApplicationCommandType.ChatInput,
+    integration_types: [ApplicationIntegrationType.UserInstall],
+    options: [
+      {
+        name: 'text',
+        description: '말할 내용',
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+    ],
+  },
 ]
 
 const appId = process.env.APP_ID ?? ''
