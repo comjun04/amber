@@ -1,11 +1,8 @@
 import {
-  APIChatInputApplicationCommandInteractionData,
-  APIInteraction,
   APIInteractionResponseCallbackData,
   APIInteractionResponseChannelMessageWithSource,
   ApplicationCommandOptionType,
   InteractionResponseType,
-  InteractionType,
   MessageFlags,
 } from 'discord-api-types/v10'
 import { fetchUser } from '../util'

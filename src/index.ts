@@ -6,15 +6,11 @@ import { verifyKey } from 'discord-interactions'
 import {
   APIChatInputApplicationCommandInteractionData,
   APIInteraction,
-  APIInteractionResponseCallbackData,
-  APIInteractionResponseChannelMessageWithSource,
-  ApplicationCommandOptionType,
   InteractionResponseType,
   InteractionType,
-  MessageFlags,
 } from 'discord-api-types/v10'
 import type { CommandRunFuncAdditionalData } from './types'
-import { fetchUser, getInteractionAuthorId } from './util'
+import { getInteractionAuthorId } from './util'
 
 import * as AvatarCommand from './commands/avatar'
 import * as BannerCommand from './commands/banner'

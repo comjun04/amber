@@ -1,15 +1,10 @@
 import {
-  APIChatInputApplicationCommandInteractionData,
-  APIInteraction,
-  APIInteractionResponseCallbackData,
   APIInteractionResponseChannelMessageWithSource,
   ApplicationCommandOptionType,
   InteractionResponseType,
-  InteractionType,
   MessageFlags,
 } from 'discord-api-types/v10'
 import type { CommandRunFunc } from '../types'
-import { fetchUser, getInteractionAuthorId } from '../util'
 
 export const run: CommandRunFunc = async (c, commandData) => {
   const textOption = commandData.options?.find((o) => o.name === 'text')
