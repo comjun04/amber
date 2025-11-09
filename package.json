@@ -6,7 +6,8 @@
     "start": "tsx src/index.ts",
     "dev": "tsx watch --clear-screen=false src/index.ts",
     "check": "tsc --noEmit",
-    "register": "tsx src/scripts/register-command.ts"
+    "register": "tsx src/scripts/register-command.ts",
+    "format": "prettier --write src"
   },
   "keywords": [],
   "author": "",
