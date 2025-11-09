@@ -5,7 +5,8 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "dev": "tsx watch --clear-screen=false src/index.ts",
-    "register": "tsx utils/register-command.ts"
+    "check": "tsc --noEmit",
+    "register": "tsx src/scripts/register-command.ts"
   },
   "keywords": [],
   "author": "",
