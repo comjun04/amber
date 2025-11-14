@@ -6,6 +6,7 @@ import {
 } from 'discord-api-types/v10'
 import type { CommandRunFunc } from '../types'
 import { fetchUser } from '../util'
+import { saveUserProfileData } from '../save-to-server'
 
 export const run: CommandRunFunc = async (
   c,
@@ -40,14 +41,6 @@ export const run: CommandRunFunc = async (
   })
   if (targetUser == null) return
 
-  const ephemeralOption = commandData.options?.find(
-    (o) => o.name === 'ephemeral',
-  )
-  const shouldRespondEphemeral =
-    ephemeralOption?.type === ApplicationCommandOptionType.Boolean
-      ? ephemeralOption.value
-      : true // 옵션이 지정되지 않았을 경우 기본값 true
-
   const bannerHash = targetUser.banner
   if (bannerHash == null) {
     return c.json<APIInteractionResponseChannelMessageWithSource>({
@@ -58,9 +51,29 @@ export const run: CommandRunFunc = async (
       },
     })
   }
+  const isBannerGif = bannerHash.startsWith('a_')
+  const bannerUrl = `https://cdn.discordapp.com/banners/${targetUserId}/${bannerHash}.${isBannerGif ? 'gif' : 'png'}?size=2048`
 
-  const isAvatarGif = bannerHash.startsWith('a_')
-  const bannerUrl = `https://cdn.discordapp.com/banners/${targetUserId}/${bannerHash}.${isAvatarGif ? 'gif' : 'png'}?size=2048`
+  const saveOption = commandData.options?.find((o) => o.name === 'save')
+  const shouldSaveToServer =
+    saveOption?.type === ApplicationCommandOptionType.Boolean
+      ? saveOption.value
+      : false
+  if (shouldSaveToServer) {
+    await saveUserProfileData(
+      { id: targetUser.id, username: targetUser.username },
+      'banner',
+      bannerUrl,
+    )
+  }
+
+  const ephemeralOption = commandData.options?.find(
+    (o) => o.name === 'ephemeral',
+  )
+  const shouldRespondEphemeral =
+    ephemeralOption?.type === ApplicationCommandOptionType.Boolean
+      ? ephemeralOption.value
+      : true // 옵션이 지정되지 않았을 경우 기본값 true
 
   return c.json<APIInteractionResponseChannelMessageWithSource>({
     type: InteractionResponseType.ChannelMessageWithSource,
