@@ -8,6 +8,7 @@ import {
 import { fetchUser } from '../util'
 
 import type { CommandRunFunc } from '../types'
+import { saveUserProfileData } from '../save-to-server'
 
 export const run: CommandRunFunc = async (
   c,
@@ -51,6 +52,19 @@ export const run: CommandRunFunc = async (
     targetUser.avatar != null
       ? `https://cdn.discordapp.com/avatars/${targetUserId}/${targetUser.avatar}.${isAvatarGif ? 'gif' : 'png'}?size=1024`
       : `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`
+
+  const saveOption = commandData.options?.find((o) => o.name === 'save')
+  const shouldSaveToServer =
+    saveOption?.type === ApplicationCommandOptionType.Boolean
+      ? saveOption.value
+      : false
+  if (shouldSaveToServer) {
+    await saveUserProfileData(
+      { id: targetUser.id, username: targetUser.username },
+      'avatar',
+      avatarUrl,
+    )
+  }
 
   const ephemeralOption = commandData.options?.find(
     (o) => o.name === 'ephemeral',

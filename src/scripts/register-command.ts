@@ -30,6 +30,12 @@ const commands: RESTPutAPIApplicationCommandsJSONBody = [
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
+      {
+        name: 'save',
+        description: '서버에 이미지를 저장할지 여부. 기본값은 false입니다.',
+        type: ApplicationCommandOptionType.Boolean,
+        required: false,
+      },
     ],
   },
   {
@@ -49,6 +55,12 @@ const commands: RESTPutAPIApplicationCommandsJSONBody = [
         name: 'ephemeral',
         description:
           '메세지를 나만 볼 수 있게 출력할지 여부. 기본값은 true입니다.',
+        type: ApplicationCommandOptionType.Boolean,
+        required: false,
+      },
+      {
+        name: 'save',
+        description: '서버에 이미지를 저장할지 여부. 기본값은 false입니다.',
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
