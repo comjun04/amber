@@ -4,9 +4,12 @@ import {
   InteractionResponseType,
   MessageFlags,
 } from 'discord-api-types/v10'
-import type { CommandRunFunc } from '../types'
+import type { ChatInputCommandRunFn } from '../types'
 
-export const run: CommandRunFunc = async (c, commandData) => {
+export const runChatInputCommand: ChatInputCommandRunFn = async (
+  c,
+  commandData,
+) => {
   const textOption = commandData.options?.find((o) => o.name === 'text')
   const text =
     textOption?.type === ApplicationCommandOptionType.String

@@ -10,13 +10,13 @@ import {
   InteractionResponseType,
   InteractionType,
 } from 'discord-api-types/v10'
-import type { CommandRunFuncAdditionalData } from './types'
+import type { ChatInputCommandRunFnAdditionalData } from './types'
 import { getInteractionAuthorId } from './util'
 
 import * as AvatarCommand from './commands/avatar'
 import * as BannerCommand from './commands/banner'
 import * as SayCommand from './commands/say'
-import * as SaveUserProfileCommand from './commands/save-user-profile.ts'
+import * as SaveUserProfileCommand from './commands/save-user-profile'
 
 const clientPublicKey = process.env.APP_PUBLIC_KEY ?? ''
 
@@ -55,19 +55,31 @@ app.post('/interactions', async (c) => {
 
   if (type === InteractionType.ApplicationCommand) {
     const { name } = data
-    const additionalData: CommandRunFuncAdditionalData = {
+    const additionalData: ChatInputCommandRunFnAdditionalData = {
       interactionAuthorId: getInteractionAuthorId(body),
     }
 
     if (name === 'avatar') {
       const commandData = data as APIChatInputApplicationCommandInteractionData
-      return await AvatarCommand.run(c, commandData, additionalData)
+      return await AvatarCommand.runChatInputCommand(
+        c,
+        commandData,
+        additionalData,
+      )
     } else if (name === 'banner') {
       const commandData = data as APIChatInputApplicationCommandInteractionData
-      return await BannerCommand.run(c, commandData, additionalData)
+      return await BannerCommand.runChatInputCommand(
+        c,
+        commandData,
+        additionalData,
+      )
     } else if (name === 'say') {
       const commandData = data as APIChatInputApplicationCommandInteractionData
-      return await SayCommand.run(c, commandData, additionalData)
+      return await SayCommand.runChatInputCommand(
+        c,
+        commandData,
+        additionalData,
+      )
     } else if (name === 'Save User Profile') {
       const commandData = data as APIUserApplicationCommandInteractionData
       return await SaveUserProfileCommand.runUserCommand(c, commandData)

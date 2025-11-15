@@ -3,11 +3,11 @@ import {
   InteractionResponseType,
   MessageFlags,
 } from 'discord-api-types/v10'
-import { UserCommandRunFunc } from '../types'
+import { UserCommandRunFn } from '../types'
 import { saveUserProfileData } from '../save-to-server'
 import { getUserAvatar, getUserBanner } from '../rest-actions'
 
-export const runUserCommand: UserCommandRunFunc = async (c, commandData) => {
+export const runUserCommand: UserCommandRunFn = async (c, commandData) => {
   const targetUserId = Object.keys(commandData.resolved.users)[0]
   if (targetUserId == null) {
     return c.json<APIInteractionResponseChannelMessageWithSource>({

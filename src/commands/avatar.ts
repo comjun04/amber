@@ -7,10 +7,10 @@ import {
 } from 'discord-api-types/v10'
 import { getUserAvatar } from '../rest-actions'
 
-import type { CommandRunFunc } from '../types'
+import type { ChatInputCommandRunFn } from '../types'
 import { saveUserProfileData } from '../save-to-server'
 
-export const run: CommandRunFunc = async (
+export const runChatInputCommand: ChatInputCommandRunFn = async (
   c,
   commandData,
   { interactionAuthorId },

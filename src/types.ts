@@ -4,17 +4,17 @@ import {
   type APIChatInputApplicationCommandInteractionData,
 } from 'discord-api-types/v10'
 
-export interface CommandRunFuncAdditionalData {
+export interface ChatInputCommandRunFnAdditionalData {
   interactionAuthorId: string | null
 }
 
-export type CommandRunFunc = (
+export type ChatInputCommandRunFn = (
   c: Context,
   commandData: APIChatInputApplicationCommandInteractionData,
-  additionalData: CommandRunFuncAdditionalData,
+  additionalData: ChatInputCommandRunFnAdditionalData,
 ) => Promise<void | TypedResponse>
 
-export type UserCommandRunFunc = (
+export type UserCommandRunFn = (
   c: Context,
   commandData: APIUserApplicationCommandInteractionData,
 ) => Promise<void | TypedResponse>
