@@ -42,14 +42,14 @@ export const runChatInputCommand: ChatInputCommandRunFn = async (
     })
   })
   if (userAvatarData == null) return
-  const { user: targetUser, avatarUrl } = userAvatarData
+  const { user: targetUser, avatarUrl, defaultImage } = userAvatarData
 
   const saveOption = commandData.options?.find((o) => o.name === 'save')
   const shouldSaveToServer =
     saveOption?.type === ApplicationCommandOptionType.Boolean
       ? saveOption.value
       : false
-  if (shouldSaveToServer) {
+  if (shouldSaveToServer && !defaultImage) {
     await saveUserProfileData(
       { id: targetUserId, username: targetUser.username },
       'avatar',

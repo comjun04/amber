@@ -32,14 +32,16 @@ export const runUserCommand: UserCommandRunFn = async (c, commandData) => {
 }
 
 async function saveUserAvatarAndBannerImages(userId: string) {
-  const { user, avatarUrl } = await getUserAvatar(userId)
+  const { user, avatarUrl, defaultImage } = await getUserAvatar(userId)
   const { bannerUrl } = await getUserBanner(userId)
 
-  await saveUserProfileData(
-    { id: userId, username: user.username },
-    'avatar',
-    avatarUrl,
-  )
+  if (!defaultImage) {
+    await saveUserProfileData(
+      { id: userId, username: user.username },
+      'avatar',
+      avatarUrl,
+    )
+  }
   if (bannerUrl != null) {
     await saveUserProfileData(
       { id: userId, username: user.username },

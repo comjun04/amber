@@ -23,7 +23,7 @@ export async function getUserAvatar(userId: string) {
       ? `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.${isAvatarGif ? 'gif' : 'png'}?size=1024`
       : `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`
 
-  return { user, avatarUrl }
+  return { user, avatarUrl, defaultImage: user.avatar == null }
 }
 
 export async function getUserBanner(userId: string) {
