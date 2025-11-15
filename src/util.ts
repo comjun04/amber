@@ -1,11 +1,4 @@
-import { REST } from '@discordjs/rest'
-import {
-  APIApplicationCommandInteraction,
-  RESTGetAPIUserResult,
-  Routes,
-} from 'discord-api-types/v10'
-
-const restClient = new REST().setToken(process.env.BOT_TOKEN ?? '')
+import { APIApplicationCommandInteraction } from 'discord-api-types/v10'
 
 export const getInteractionAuthorId = (
   interaction: APIApplicationCommandInteraction,
@@ -17,11 +10,4 @@ export const getInteractionAuthorId = (
   }
 
   return null
-}
-
-export const fetchUser = async (userId: string) => {
-  const user = (await restClient.get(
-    Routes.user(userId),
-  )) as RESTGetAPIUserResult
-  return user
 }

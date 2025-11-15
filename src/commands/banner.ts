@@ -5,7 +5,7 @@ import {
   MessageFlags,
 } from 'discord-api-types/v10'
 import type { CommandRunFunc } from '../types'
-import { fetchUser } from '../util'
+import { fetchUser } from '../rest-actions'
 import { saveUserProfileData } from '../save-to-server'
 
 export const run: CommandRunFunc = async (
