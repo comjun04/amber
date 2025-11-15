@@ -51,7 +51,7 @@ app.post('/interactions', async (c) => {
     return c.json({ type: InteractionResponseType.Pong })
   }
 
-  console.log(body)
+  // console.log(body)
 
   if (type === InteractionType.ApplicationCommand) {
     const { name } = data
