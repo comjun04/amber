@@ -6,6 +6,7 @@ import { verifyKey } from 'discord-interactions'
 import {
   APIChatInputApplicationCommandInteractionData,
   APIInteraction,
+  APIUserApplicationCommandInteractionData,
   InteractionResponseType,
   InteractionType,
 } from 'discord-api-types/v10'
@@ -15,6 +16,7 @@ import { getInteractionAuthorId } from './util'
 import * as AvatarCommand from './commands/avatar'
 import * as BannerCommand from './commands/banner'
 import * as SayCommand from './commands/say'
+import * as SaveUserProfileCommand from './commands/save-user-profile.ts'
 
 const clientPublicKey = process.env.APP_PUBLIC_KEY ?? ''
 
@@ -66,6 +68,9 @@ app.post('/interactions', async (c) => {
     } else if (name === 'say') {
       const commandData = data as APIChatInputApplicationCommandInteractionData
       return await SayCommand.run(c, commandData, additionalData)
+    } else if (name === 'Save User Profile') {
+      const commandData = data as APIUserApplicationCommandInteractionData
+      return await SaveUserProfileCommand.runUserCommand(c, commandData)
     }
   }
 })

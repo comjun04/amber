@@ -80,6 +80,12 @@ const commands: RESTPutAPIApplicationCommandsJSONBody = [
       },
     ],
   },
+
+  {
+    name: 'Save User Profile',
+    type: ApplicationCommandType.User,
+    integration_types: [ApplicationIntegrationType.UserInstall],
+  },
 ]
 
 const appId = process.env.APP_ID ?? ''
