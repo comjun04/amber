@@ -5,7 +5,7 @@ import {
   MessageFlags,
 } from 'discord-api-types/v10'
 import type { CommandRunFunc } from '../types'
-import { fetchUser } from '../rest-actions'
+import { getUserBanner } from '../rest-actions'
 import { saveUserProfileData } from '../save-to-server'
 
 export const run: CommandRunFunc = async (
@@ -29,7 +29,7 @@ export const run: CommandRunFunc = async (
     })
   }
 
-  const targetUser = await fetchUser(targetUserId).catch((err) => {
+  const userBannerData = await getUserBanner(targetUserId).catch((err) => {
     console.error(err)
     c.json<APIInteractionResponseChannelMessageWithSource>({
       type: InteractionResponseType.ChannelMessageWithSource,
@@ -39,10 +39,10 @@ export const run: CommandRunFunc = async (
       },
     })
   })
-  if (targetUser == null) return
+  if (userBannerData == null) return
+  const { user: targetUser, bannerUrl } = userBannerData
 
-  const bannerHash = targetUser.banner
-  if (bannerHash == null) {
+  if (bannerUrl == null) {
     return c.json<APIInteractionResponseChannelMessageWithSource>({
       type: InteractionResponseType.ChannelMessageWithSource,
       data: {
@@ -51,8 +51,6 @@ export const run: CommandRunFunc = async (
       },
     })
   }
-  const isBannerGif = bannerHash.startsWith('a_')
-  const bannerUrl = `https://cdn.discordapp.com/banners/${targetUserId}/${bannerHash}.${isBannerGif ? 'gif' : 'png'}?size=2048`
 
   const saveOption = commandData.options?.find((o) => o.name === 'save')
   const shouldSaveToServer =

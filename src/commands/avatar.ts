@@ -5,7 +5,7 @@ import {
   InteractionResponseType,
   MessageFlags,
 } from 'discord-api-types/v10'
-import { fetchUser } from '../rest-actions'
+import { getUserAvatar } from '../rest-actions'
 
 import type { CommandRunFunc } from '../types'
 import { saveUserProfileData } from '../save-to-server'
@@ -31,7 +31,7 @@ export const run: CommandRunFunc = async (
     })
   }
 
-  const targetUser = await fetchUser(targetUserId).catch((err) => {
+  const userAvatarData = await getUserAvatar(targetUserId).catch((err) => {
     console.error(err)
     c.json<APIInteractionResponseChannelMessageWithSource>({
       type: InteractionResponseType.ChannelMessageWithSource,
@@ -41,17 +41,8 @@ export const run: CommandRunFunc = async (
       },
     })
   })
-  if (targetUser == null) return
-
-  const defaultAvatarIndex =
-    targetUser.discriminator === '0' // migrated to new username system
-      ? Number((BigInt(targetUserId) >> 22n) % 6n)
-      : Number(targetUser.discriminator) % 5
-  const isAvatarGif = targetUser.avatar?.startsWith('a_')
-  const avatarUrl =
-    targetUser.avatar != null
-      ? `https://cdn.discordapp.com/avatars/${targetUserId}/${targetUser.avatar}.${isAvatarGif ? 'gif' : 'png'}?size=1024`
-      : `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`
+  if (userAvatarData == null) return
+  const { user: targetUser, avatarUrl } = userAvatarData
 
   const saveOption = commandData.options?.find((o) => o.name === 'save')
   const shouldSaveToServer =
@@ -60,7 +51,7 @@ export const run: CommandRunFunc = async (
       : false
   if (shouldSaveToServer) {
     await saveUserProfileData(
-      { id: targetUser.id, username: targetUser.username },
+      { id: targetUserId, username: targetUser.username },
       'avatar',
       avatarUrl,
     )
