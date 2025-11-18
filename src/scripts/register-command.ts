@@ -86,6 +86,12 @@ const commands: RESTPutAPIApplicationCommandsJSONBody = [
     type: ApplicationCommandType.User,
     integration_types: [ApplicationIntegrationType.UserInstall],
   },
+
+  {
+    name: 'Save images from this message',
+    type: ApplicationCommandType.Message,
+    integration_types: [ApplicationIntegrationType.UserInstall],
+  },
 ]
 
 const appId = process.env.APP_ID ?? ''

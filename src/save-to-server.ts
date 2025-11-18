@@ -20,7 +20,12 @@ export async function saveUserProfileData(
     targetFolder = `${user.id}-${user.username}`
   }
 
-  const fullFolderPath = join(FILESAVE_ROOT_PATH, targetFolder, type)
+  const fullFolderPath = join(
+    FILESAVE_ROOT_PATH,
+    'profiles',
+    targetFolder,
+    type,
+  )
   await mkdir(fullFolderPath, { recursive: true })
 
   const fullFilePath = join(fullFolderPath, imageFilename)
@@ -39,4 +44,29 @@ export async function saveUserProfileData(
 
   await writeFile(fullFilePath, image)
   console.log(fullFilePath)
+}
+
+export async function saveMessageImages(
+  attachmentsData: {
+    id: string
+    filename: string
+    url: string
+  }[],
+) {
+  const folderPath = join(FILESAVE_ROOT_PATH, 'images')
+  await mkdir(folderPath, { recursive: true })
+
+  for (const data of attachmentsData) {
+    const res = await fetch(data.url)
+    if (!res.ok) {
+      console.error(res.status, await res.text())
+      continue
+    }
+    const image = Buffer.from(await res.arrayBuffer())
+
+    const filename = `${data.id}_${data.filename}`
+    const filePath = join(folderPath, filename)
+    await writeFile(filePath, image)
+    console.log(filePath)
+  }
 }

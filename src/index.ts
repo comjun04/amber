@@ -6,6 +6,7 @@ import { verifyKey } from 'discord-interactions'
 import {
   APIChatInputApplicationCommandInteractionData,
   APIInteraction,
+  APIMessageApplicationCommandInteractionData,
   APIUserApplicationCommandInteractionData,
   InteractionResponseType,
   InteractionType,
@@ -17,6 +18,7 @@ import * as AvatarCommand from './commands/avatar'
 import * as BannerCommand from './commands/banner'
 import * as SayCommand from './commands/say'
 import * as SaveUserProfileCommand from './commands/save-user-profile'
+import * as SaveMessageImagesCommand from './commands/save-msg-images'
 
 const clientPublicKey = process.env.APP_PUBLIC_KEY ?? ''
 
@@ -83,6 +85,9 @@ app.post('/interactions', async (c) => {
     } else if (name === 'Save User Profile') {
       const commandData = data as APIUserApplicationCommandInteractionData
       return await SaveUserProfileCommand.runUserCommand(c, commandData)
+    } else if (name === 'Save images from this message') {
+      const commandData = data as APIMessageApplicationCommandInteractionData
+      return await SaveMessageImagesCommand.runMessageCommand(c, commandData)
     }
   }
 })
